@@ -87,16 +87,22 @@ Loop through the image pixels and extract the least significant bit from each co
 ## How to run this project in your system
 
 - Zeroth step clone the repository 
-        git clone 
+
+
+        git clone git@github.com:Nage-Sh/steganography.git
         cd project
 
 - Steps for Windows user
+
+
         python -m venv env
         env/Scripts/activate
         pip install -r requirements.txt
         python steganograph.py
 
 - Steps for Linux user
+
+
         python3 -m venv env
         source venv/bin/activate
         pip install -r requirements.txt
