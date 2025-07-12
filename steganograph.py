@@ -115,6 +115,17 @@ class SteganographyApp:
 
         # Back to Home Button
         tk.Button(self.root, text="Back to Home", command=self.load_home_page).pack(pady=5)
+    
+    def load_image_encoder(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Image files", "*.png *.bmp")])
+        if file_path:
+            self.show_image(file_path)
+
+    def load_image_decoder(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Image files", "*.png *.bmp")])
+        if file_path:
+            self.show_image(file_path)
+
 
 
 
