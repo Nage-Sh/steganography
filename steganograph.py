@@ -198,11 +198,7 @@ class SteganographyApp:
             encoded_image.save(save_path)
             messagebox.showinfo("Success", f"Text encoded and saved to: {save_path}")
 
-        # Save the encoded text to a file
-        self.text_file_path = save_path + ".txt"
-        with open(self.text_file_path, "w") as file:
-            file.write(text)
-    
+        
     def decode_text(self):
         if not self.original_image:
             messagebox.showerror("No Image", "Load an image first.")
