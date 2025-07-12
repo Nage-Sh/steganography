@@ -7,7 +7,7 @@ class SteganographyApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Text in Image - Steganography")
-        self.root.geometry("700x700")
+        self.root.geometry("1000x1000")
         self.root.resizable(True, True)
 
         self.original_image = None
@@ -241,7 +241,6 @@ class SteganographyApp:
             messagebox.showinfo("Success", "Text copied to clipboard!")
         else:
             messagebox.showerror("No Text", "No decoded text to copy.")
-
 
 
 if __name__ == '__main__':
