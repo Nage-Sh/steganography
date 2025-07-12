@@ -232,6 +232,15 @@ class SteganographyApp:
         self.decoded_text_box.delete(1.0, tk.END)
         self.decoded_text_box.insert(tk.END, text)
 
+    def copy_to_clipboard(self):
+        decoded_text = self.decoded_text_box.get(1.0, tk.END).strip()
+        if decoded_text:
+            self.root.clipboard_clear()
+            self.root.clipboard_append(decoded_text)
+            self.root.update()
+            messagebox.showinfo("Success", "Text copied to clipboard!")
+        else:
+            messagebox.showerror("No Text", "No decoded text to copy.")
 
 
 
