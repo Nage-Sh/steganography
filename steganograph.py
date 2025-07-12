@@ -142,6 +142,21 @@ class SteganographyApp:
         else:
             messagebox.showerror("Invalid Format", "Only PNG or BMP images are supported.")
 
+    def show_image(self, path):
+        try:
+            img = Image.open(path)
+            self.original_image = img
+            self.image_path = path
+
+            preview = img.copy()
+            preview.thumbnail((400, 400))
+            photo = ImageTk.PhotoImage(preview)
+
+            self.img_label.configure(image=photo, text="")
+            self.img_label.image = photo
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load image: {str(e)}")
+
 
 
 
