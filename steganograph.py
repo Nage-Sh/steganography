@@ -73,6 +73,50 @@ class SteganographyApp:
         # Back to Home Button
         tk.Button(self.root, text="Back to Home", command=self.load_home_page).pack(pady=5)
 
+    def load_decoder_page(self):
+        self.current_page = "decoder"
+        
+        for widget in self.root.winfo_children():
+            widget.destroy()
+
+        self.decoder_label = tk.Label(self.root, text="Decoder Page", font=("Arial", 16))
+        self.decoder_label.pack(pady=20)
+
+        # Drag and Drop Area for Decoder
+        self.drop_label = tk.Label(self.root, text="Drag and drop a .png or .bmp image here", bg="#f0f0f0", relief="solid", bd=2, width=60, height=4)
+        self.drop_label.pack(pady=20)
+
+        self.drop_label.drop_target_register(DND_FILES)
+        self.drop_label.dnd_bind('<<Drop>>', self.drop_file_decoder)
+
+        # Load Image Button (Drag and Drop)
+        self.load_btn = tk.Button(self.root, text="Load Stego Image Manually", command=self.load_image_decoder)
+        self.load_btn.pack(pady=5)
+
+        # Image Display
+        self.img_label = tk.Label(self.root, text="Image will appear here", bd=2, relief="sunken")
+        self.img_label.pack(pady=10)
+
+        # Start Index for decoding
+        tk.Label(self.root, text="Enter Start Index for Decoding:").pack()
+        self.decode_coord_entry = tk.Entry(self.root, width=40)
+        self.decode_coord_entry.pack(pady=5)
+
+        # Decode Button
+        tk.Button(self.root, text="Reveal Text from Image", command=self.decode_text).pack(pady=10)
+
+        # Text box to display decoded text
+        tk.Label(self.root, text="Decoded Text:").pack()
+        self.decoded_text_box = tk.Text(self.root, height=5, width=60)
+        self.decoded_text_box.pack(pady=5)
+
+        # Copy to Clipboard Button
+        tk.Button(self.root, text="Copy to Clipboard", command=self.copy_to_clipboard).pack(pady=5)
+
+        # Back to Home Button
+        tk.Button(self.root, text="Back to Home", command=self.load_home_page).pack(pady=5)
+
+
 
 if __name__ == '__main__':
     root = TkinterDnD.Tk()
