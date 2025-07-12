@@ -157,6 +157,51 @@ class SteganographyApp:
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load image: {str(e)}")
 
+    def encode_text(self):
+        if not self.original_image:
+            messagebox.showerror("No Image", "Load an image first.")
+            return
+
+        text = self.text_entry.get("1.0", tk.END).strip()
+        if not text:
+            messagebox.showerror("No Text", "Enter some text to hide.")
+            return
+
+        try:
+            start_index = int(self.coord_entry.get())
+        except ValueError:
+            messagebox.showerror("Invalid Index", "Please enter a valid integer index.")
+            return
+
+        # Convert text to binary and append delimiter 'Y'
+        binary = ''.join(format(ord(c), '08b') for c in text) + '1111111111111111'  # delimiter
+        pixels = list(self.original_image.getdata())  # 1D array of pixels
+
+        # Encode the text into the pixels starting from the given index
+        idx = start_index
+        for bit in binary:
+            r, g, b = pixels[idx]
+            r = (r & ~1) | int(bit)  # Set the LSB to the binary bit
+            pixels[idx] = (r, g, b)
+            idx += 1
+
+            if idx >= len(pixels):
+                messagebox.showerror("Error", "Not enough space in image to encode the text.")
+                return
+
+        # Save the image with encoded text
+        encoded_image = self.original_image.copy()
+        encoded_image.putdata(pixels)
+
+        save_path = filedialog.asksaveasfilename(defaultextension=".png", filetypes=[("PNG Files", "*.png")])
+        if save_path:
+            encoded_image.save(save_path)
+            messagebox.showinfo("Success", f"Text encoded and saved to: {save_path}")
+
+        # Save the encoded text to a file
+        self.text_file_path = save_path + ".txt"
+        with open(self.text_file_path, "w") as file:
+            file.write(text)
 
 
 
