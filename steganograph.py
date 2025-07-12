@@ -126,6 +126,22 @@ class SteganographyApp:
         if file_path:
             self.show_image(file_path)
 
+    def drop_file_encoder(self, event):
+        # Get the dropped file path
+        file_path = event.data.strip('{}')  # Remove braces if path contains spaces
+        if file_path.lower().endswith((".png", ".bmp")):
+            self.show_image(file_path)
+        else:
+            messagebox.showerror("Invalid Format", "Only PNG or BMP images are supported.")
+
+    def drop_file_decoder(self, event):
+        # Get the dropped file path
+        file_path = event.data.strip('{}')  # Remove braces if path contains spaces
+        if file_path.lower().endswith((".png", ".bmp")):
+            self.show_image(file_path)
+        else:
+            messagebox.showerror("Invalid Format", "Only PNG or BMP images are supported.")
+
 
 
 
