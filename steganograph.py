@@ -202,6 +202,36 @@ class SteganographyApp:
         self.text_file_path = save_path + ".txt"
         with open(self.text_file_path, "w") as file:
             file.write(text)
+    
+    def decode_text(self):
+        if not self.original_image:
+            messagebox.showerror("No Image", "Load an image first.")
+            return
+
+        try:
+            start_index = int(self.decode_coord_entry.get())
+        except ValueError:
+            messagebox.showerror("Invalid Index", "Please enter a valid integer index.")
+            return
+
+        pixels = list(self.original_image.getdata())  # 1D array of pixels
+        binary_data = ""
+        idx = start_index
+        while idx < len(pixels):
+            r, g, b = pixels[idx]
+            binary_data += str(r & 1)  # Extract the LSB
+            idx += 1
+
+            if binary_data.endswith('1111111111111111'):  # Delimiter found
+                break
+
+        # Convert binary to text
+        chars = [binary_data[i:i+8] for i in range(0, len(binary_data), 8)]
+        text = ''.join(chr(int(char, 2)) for char in chars if char != '11111111')  # Stop at delimiter
+
+        self.decoded_text_box.delete(1.0, tk.END)
+        self.decoded_text_box.insert(tk.END, text)
+
 
 
 
